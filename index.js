@@ -3,8 +3,10 @@ var http = require('http');
 var path = require('path');
 var Twit = require('twit');
 var fs = require('fs');
+var io = require('socket.io');
 var app = express(); // create the app
 var server = http.createServer(app);
+var socket = io.listen(server);
 var port = 3000;
 
 app.use(express.static(path.join(__dirname, '/public')));
@@ -13,11 +15,22 @@ app.get('/', function(req, res) {
 });
 
 var T = new Twit({
-  consumer_key: consumer_secret: access_token: access_token_secret:
+  consumer_key:'',
+  consumer_secret:'',
+   access_token: '',
+   access_token_secret:''
 })
 
 var counter = 0;
 var results = [];
+
+  socket.on('connection', function(client) {
+    // log what the client is sending
+    client.on('message', function(message) {
+      console.log(message);
+    });
+
+    });
 var timer = setInterval(function() {
   T.get('search/tweets', {
     q: 'hund',

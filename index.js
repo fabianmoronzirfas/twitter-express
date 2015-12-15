@@ -9,6 +9,9 @@ var server = http.createServer(app);
 var socket = io.listen(server);
 var port = 3000;
 
+var config = require('./config.json');
+console.log(config.key);
+
 app.use(express.static(path.join(__dirname, '/public')));
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/index.html');

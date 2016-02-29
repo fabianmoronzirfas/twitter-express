@@ -18,22 +18,21 @@ app.get('/', function(req, res) {
 });
 
 var T = new Twit({
-  consumer_key:'',
-  consumer_secret:'',
-   access_token: '',
-   access_token_secret:''
-})
+  consumer_key: '',
+  consumer_secret: '',
+  access_token: '',
+  access_token_secret: ''
+});
 
 var counter = 0;
 var results = [];
+// socket.on('connection', function(client) {
+//   // log what the client is sending
+//   client.on('message', function(message) {
+//     console.log(message);
+//   });
 
-  socket.on('connection', function(client) {
-    // log what the client is sending
-    client.on('message', function(message) {
-      console.log(message);
-    });
-
-    });
+//   });
 var timer = setInterval(function() {
   T.get('search/tweets', {
     q: 'hund',
@@ -44,10 +43,10 @@ var timer = setInterval(function() {
     results.push(data);
     counter++;
 
-    if (counter == 2) {
-      fs.writeFile('public/cache/data.json', JSON.stringify(results), 'utf8', function(err, data) {
-        if (err) {
-          throw err;
+    if (counter === 2) {
+      fs.writeFile('public/cache/data.json', JSON.stringify(results), 'utf8', function(error, _data) {
+        if (error) {
+          throw error;
         } else {
           console.log('wrote file');
           clearInterval(timer);
